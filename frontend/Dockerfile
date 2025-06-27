@@ -1,6 +1,15 @@
-FROM golang:1.21-alpine
+# Dockerfile (frontend)
+FROM node:20-alpine
+
 WORKDIR /app
+
 COPY . .
-RUN go mod init projects-service && go mod tidy
-RUN go build -o app
-CMD ["./app"]
+
+RUN npm install
+RUN npm run build
+
+# Utilise un serveur web minimal pour servir le build
+RUN npm install -g serve
+CMD ["serve", "-s", "dist"]
+
+EXPOSE 3000
