@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  gateway:
+    build: ./backend/gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - projects
+      - skills
+      - contact
+
+  projects:
+    build: ./backend/projects-service
+    ports:
+      - "8001:8000"
+
+  skills:
+    build: ./backend/skills-service
+    ports:
+      - "8002:8000"
+
+  contact:
+    build: ./backend/contact-service
+    ports:
+      - "8003:8000"
+
+  mailer:
+    build: ./backend/mailer-service
+    ports:
+      - "8004:8000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
